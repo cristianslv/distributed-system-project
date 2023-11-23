@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
 public class MessageUsecases {
-    private RemoteObjectInterface remoteObject;
+    private RemoteObjectInterface remoteObjectInterface;
 
     public MessageUsecases() {
         connectToServer();
@@ -15,7 +15,7 @@ public class MessageUsecases {
     private void connectToServer() {
         try {
             var registry = LocateRegistry.getRegistry(null, 3000);
-            remoteObject = (RemoteObjectInterface) registry.lookup("master");
+            remoteObjectInterface = (RemoteObjectInterface) registry.lookup("master");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -24,9 +24,20 @@ public class MessageUsecases {
 
     public void sendMessageAndPrintServerEcho(String message) {
         try {
-            var echo = remoteObject.echo(message);
+            var echo = remoteObjectInterface.echo(message);
 
             Utils.echoMessage(echo);
+        } catch (RemoteException ignored) {
+            ignored.printStackTrace();
+            Utils.remoteExceptionMessage();
+        }
+    }
+
+    public void getAllMessagesAndPrint() {
+        try {
+            var allMessages = remoteObjectInterface.getAllMessages();
+
+            Utils.echoMessages(allMessages);
         } catch (RemoteException ignored) {
             ignored.printStackTrace();
             Utils.remoteExceptionMessage();

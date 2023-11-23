@@ -1,5 +1,7 @@
 package client;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Utils {
@@ -77,7 +79,7 @@ public class Utils {
                 .concat("O servidor retornou sua mensagem!")
                 .concat(System.lineSeparator())
                 .concat(System.lineSeparator())
-                .concat("ECHO MESSAGE:")
+                .concat("Mensagem:")
                 .concat(System.lineSeparator())
                 .concat(message)
                 .concat(System.lineSeparator())
@@ -114,8 +116,55 @@ public class Utils {
         waitEnter();
     }
 
+    public static void askUserMessage() {
+        cleanTerminal();
+
+        var askUserMessage = "*------------------------------------------------*"
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("Digite a sua mensagem abaixo e pressione")
+                .concat(System.lineSeparator())
+                .concat("ENTER para enviar ao servidor!")
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("*------------------------------------------------*");
+
+        printMessage(askUserMessage);
+    }
+
+    public static void echoMessages(List<String> allMessages) {
+        cleanTerminal();
+
+        var echoMessages = "*------------------------------------------------*"
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("O servidor retornou todas as mensagens")
+                .concat(System.lineSeparator())
+                .concat("que foram enviadas à ele!")
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("Mensagens:")
+                .concat(System.lineSeparator())
+                .concat(allMessages.toString().replace(",", "\n"))
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("*------------------------------------------------*")
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("Pressione ENTER para continuar...");
+
+        printMessage(echoMessages);
+
+        waitEnter();
+    }
+
     public static void waitEnter() {
         var scanner = new Scanner(System.in);
         scanner.nextLine();
+    }
+
+    public static String getUserInput() {
+        var scanner = new Scanner(System.in);
+        return scanner.nextLine();
     }
 }

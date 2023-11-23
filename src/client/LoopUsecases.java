@@ -1,9 +1,5 @@
 package client;
 
-import jdk.jshell.execution.Util;
-
-import java.util.Scanner;
-
 public class LoopUsecases {
     private MessageUsecases messageUsecases;
 
@@ -12,23 +8,21 @@ public class LoopUsecases {
     }
 
     public void startLoop() {
-        var scanner = new Scanner(System.in);
         var keepLoop = true;
 
         do {
             Utils.loopMessage();
-            var userInput = scanner.next();
+            var userInput = Utils.getUserInput();
 
             switch (userInput) {
                 case "1":
-                    sendMessage(userInput);
+                    sendMessage();
                     break;
                 case "2":
                     getAllMessages();
                     break;
                 case "3":
                     keepLoop = false;
-                    scanner.close();
                     break;
                 default:
                     Utils.cleanTerminal();
@@ -36,9 +30,14 @@ public class LoopUsecases {
         } while (keepLoop);
     }
 
-    private void sendMessage(String userInput) {
+    private void sendMessage() {
+        Utils.askUserMessage();
+        var userInput = Utils.getUserInput();
+
         messageUsecases.sendMessageAndPrintServerEcho(userInput);
     }
 
-    private void getAllMessages() {}
+    private void getAllMessages() {
+        messageUsecases.getAllMessagesAndPrint();
+    }
 }
