@@ -7,10 +7,10 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemoteObjectImpl extends UnicastRemoteObject implements RemoteObjectInterface {
+public class RemoteObject extends UnicastRemoteObject implements RemoteObjectInterface {
     private final List<String> messages = new ArrayList<>();
 
-    public RemoteObjectImpl() throws RemoteException {}
+    public RemoteObject() throws RemoteException {}
 
     @Override
     public String echo(String message) throws RemoteException {

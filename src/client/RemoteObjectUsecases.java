@@ -2,20 +2,19 @@ package client;
 
 import interfaces.RemoteObjectInterface;
 
+import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 
-public class MessageUsecases {
+public class RemoteObjectUsecases {
     private RemoteObjectInterface remoteObjectInterface;
 
-    public MessageUsecases() {
+    public RemoteObjectUsecases() {
         connectToServer();
     }
 
     private void connectToServer() {
         try {
-            var registry = LocateRegistry.getRegistry(null, 3000);
-            remoteObjectInterface = (RemoteObjectInterface) registry.lookup("master");
+            remoteObjectInterface = (RemoteObjectInterface) Naming.lookup("//localhost:3000/master");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);

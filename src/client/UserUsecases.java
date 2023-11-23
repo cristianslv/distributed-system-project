@@ -1,13 +1,13 @@
 package client;
 
-public class LoopUsecases {
-    private MessageUsecases messageUsecases;
+public class UserUsecases {
+    private RemoteObjectUsecases remoteObjectUsecases;
 
-    public LoopUsecases(MessageUsecases messageUsecases) {
-        this.messageUsecases = messageUsecases;
+    public UserUsecases(RemoteObjectUsecases remoteObjectUsecases) {
+        this.remoteObjectUsecases = remoteObjectUsecases;
     }
 
-    public void startLoop() {
+    public void execute() {
         var keepLoop = true;
 
         do {
@@ -34,10 +34,10 @@ public class LoopUsecases {
         Utils.askUserMessage();
         var userInput = Utils.getUserInput();
 
-        messageUsecases.sendMessageAndPrintServerEcho(userInput);
+        remoteObjectUsecases.sendMessageAndPrintServerEcho(userInput);
     }
 
     private void getAllMessages() {
-        messageUsecases.getAllMessagesAndPrint();
+        remoteObjectUsecases.getAllMessagesAndPrint();
     }
 }

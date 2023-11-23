@@ -2,12 +2,12 @@ package client;
 
 public class Main {
     public static void main(String[] args) {
-        var messageUsecases = new MessageUsecases();
+        var messageUsecases = new RemoteObjectUsecases();
 
         Utils.welcomeMessage();
 
-        var loopUsecases = new LoopUsecases(messageUsecases);
+        var loopUsecases = new UserUsecases(messageUsecases);
 
-        loopUsecases.startLoop();
+        loopUsecases.execute();
     }
 }
