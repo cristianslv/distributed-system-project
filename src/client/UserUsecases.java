@@ -1,5 +1,9 @@
 package client;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 public class UserUsecases {
     private RemoteObjectUsecases remoteObjectUsecases;
 
@@ -13,6 +17,8 @@ public class UserUsecases {
         do {
             Utils.loopMessage();
             var userInput = Utils.getUserInput();
+
+            if (serverIsNotAvailable()) continue;
 
             switch (userInput) {
                 case "1":
@@ -30,14 +36,32 @@ public class UserUsecases {
         } while (keepLoop);
     }
 
+    private boolean serverIsNotAvailable() {
+        try {
+            remoteObjectUsecases.connectToServer();
+        } catch (Exception ignored) {
+            Utils.remoteExceptionMessage();
+            return true;
+        }
+        return false;
+    }
+
     private void sendMessage() {
         Utils.askUserMessage();
         var userInput = Utils.getUserInput();
 
-        remoteObjectUsecases.sendMessageAndPrintServerEcho(userInput);
+        try {
+            remoteObjectUsecases.sendMessageAndPrintServerEcho(userInput);
+        } catch (Exception ignored) {
+            Utils.remoteExceptionMessage();
+        }
     }
 
     private void getAllMessages() {
-        remoteObjectUsecases.getAllMessagesAndPrint();
+        try {
+            remoteObjectUsecases.getAllMessagesAndPrint();
+        } catch (Exception ignored) {
+            Utils.remoteExceptionMessage();
+        }
     }
 }

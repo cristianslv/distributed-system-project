@@ -23,4 +23,8 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteObjectInt
     public List<String> getAllMessages() throws RemoteException {
         return messages;
     }
+
+    public void setAllMessages(List<String> messages) {
+        this.messages.addAll(messages);
+    }
 }

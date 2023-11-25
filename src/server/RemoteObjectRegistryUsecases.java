@@ -3,12 +3,10 @@ package server;
 import interfaces.RemoteObjectInterface;
 
 import java.net.MalformedURLException;
-import java.rmi.AlreadyBoundException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
+import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Arrays;
 
 public class RemoteObjectRegistryUsecases {
 
@@ -35,5 +33,17 @@ public class RemoteObjectRegistryUsecases {
         } catch (MalformedURLException | NotBoundException | RemoteException ignored) {
             return null;
         }
+    }
+
+    public void bindRemoteObject(RemoteObject remoteObject) throws MalformedURLException, RemoteException, AlreadyBoundException {
+        var registeredNames = Naming.list("//localhost:3000");
+        var namesWithoutMaster = Arrays.stream(registeredNames)
+                .map(s -> s.replace("//localhost:3000/", ""))
+                .filter(s -> !s.equals("master"));
+
+        var higherRegisteredCloneName = namesWithoutMaster.mapToInt(Integer::parseInt).max().orElseGet(() -> 0);
+        var newRemoteObjectName = higherRegisteredCloneName + 1;
+        System.out.println("my new name " + newRemoteObjectName);
+        remoteObjectRegistry.bind(String.valueOf(newRemoteObjectName), remoteObject);
     }
 }

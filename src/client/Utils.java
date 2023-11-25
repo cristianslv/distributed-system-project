@@ -60,7 +60,7 @@ public class Utils {
                 .concat(System.lineSeparator())
                 .concat("1 - Enviar mensagem")
                 .concat(System.lineSeparator())
-                .concat("2 - Receber todas as mensagems enviadas")
+                .concat("2 - Receber todas as mensagens enviadas")
                 .concat(System.lineSeparator())
                 .concat("3 - Finalizar execução")
                 .concat(System.lineSeparator())
@@ -112,6 +112,28 @@ public class Utils {
                 .concat("Pressione ENTER para continuar...");
 
         printMessage(remoteExceptionMessage);
+
+        waitEnter();
+    }
+
+    public static void reconnectMessage() {
+        cleanTerminal();
+
+        var reconnectMessage = "*------------------------------------------------*"
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("Ocorreu um erro e estamos tentando reconectá-lo!")
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("Aguarde alguns instantes e tente novamente!")
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("*------------------------------------------------*")
+                .concat(System.lineSeparator())
+                .concat(System.lineSeparator())
+                .concat("Pressione ENTER para continuar...");
+
+        printMessage(reconnectMessage);
 
         waitEnter();
     }
