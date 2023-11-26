@@ -13,7 +13,7 @@ public class HealthCheckUsecases {
     public static void execute(RemoteObjectRegistryUsecases remoteObjectRegistryUsecases, RemoteObject remoteObject) {
         var healthCheckTask = new ElectionUsecases(remoteObjectRegistryUsecases, remoteObject);
 
-        scheduledFuture = threadPoolExecutor.scheduleAtFixedRate(healthCheckTask, 0, 10, TimeUnit.SECONDS);
+        scheduledFuture = threadPoolExecutor.scheduleAtFixedRate(healthCheckTask, 0, 15, TimeUnit.SECONDS);
     }
 
     public static void stop() {

@@ -4,6 +4,7 @@ import interfaces.ElectionInterface;
 
 public class ElectionUsecases implements Runnable {
     RemoteObjectRegistryUsecases remoteObjectRegistryUsecases;
+    private static final String MASTER = "master";
     RemoteObject remoteObject;
 
     public ElectionUsecases(RemoteObjectRegistryUsecases remoteObjectRegistryUsecases, RemoteObject remoteObject) {
@@ -13,7 +14,7 @@ public class ElectionUsecases implements Runnable {
 
     public void run() {
         try {
-            var masterRemoteObject = remoteObjectRegistryUsecases.getRemoteObject("master");
+            var masterRemoteObject = remoteObjectRegistryUsecases.getRemoteObject(MASTER);
 
             if (masterRemoteObject == null) {
                 System.out.println("[INFO] Servidor master indisponível, iniciando eleição");
@@ -35,7 +36,7 @@ public class ElectionUsecases implements Runnable {
 
     private void warnMasterElection() {
         try {
-            var masterRemoteObject = (ElectionInterface) remoteObjectRegistryUsecases.getRemoteObject("master");
+            var masterRemoteObject = (ElectionInterface) remoteObjectRegistryUsecases.getRemoteObject(MASTER);
             masterRemoteObject.becomeMaster();
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,7 +45,7 @@ public class ElectionUsecases implements Runnable {
 
     private void syncWithMasterRemoteObject() {
         try {
-            var masterRemoteObject = remoteObjectRegistryUsecases.getRemoteObject("master");
+            var masterRemoteObject = remoteObjectRegistryUsecases.getRemoteObject(MASTER);
             var allMessages = masterRemoteObject.getAllMessages();
 
             remoteObject.syncMessages(allMessages);

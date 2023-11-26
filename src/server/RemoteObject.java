@@ -49,10 +49,6 @@ public class RemoteObject extends UnicastRemoteObject implements RemoteObjectInt
         this.name = name;
     }
 
-    public void setAllMessages(List<String> messages) {
-        this.messages.addAll(messages);
-    }
-
     public void syncMessages(List<String> masterMessages) {
         masterMessages.removeAll(messages);
 

@@ -39,7 +39,7 @@ public class CloneUsecases {
     private static void setAllCloneMessages(RemoteObject remoteObject, RemoteObjectInterface masterRemoteObject) throws RemoteException {
         var allMessages = masterRemoteObject.getAllMessages();
 
-        remoteObject.setAllMessages(allMessages);
+        remoteObject.syncMessages(allMessages);
 
         System.out.println(
                 "[INFO] As mensagens foram sincronizadas: "
