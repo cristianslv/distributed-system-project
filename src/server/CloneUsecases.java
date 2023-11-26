@@ -14,9 +14,26 @@ public class CloneUsecases {
                                RemoteObject remoteObject) throws RemoteException, AlreadyBoundException, MalformedURLException {
         remoteObjectRegistryUsecases.bindRemoteObject(remoteObject);
 
-        var masterRemoteObject = getMasterRemoteObject(remoteObjectRegistryUsecases);
+        syncWithMasterRemoteObject(remoteObjectRegistryUsecases, remoteObject);
+    }
 
-        setAllCloneMessages(remoteObject, masterRemoteObject);
+    private static void syncWithMasterRemoteObject(RemoteObjectRegistryUsecases remoteObjectRegistryUsecases, RemoteObject remoteObject) throws RemoteException {
+        var masterRemoteObject = getMasterRemoteObject(remoteObjectRegistryUsecases, remoteObject);
+
+        if (masterRemoteObject != null) {
+            setAllCloneMessages(remoteObject, masterRemoteObject);
+            HealthCheckUsecases.execute(remoteObjectRegistryUsecases, remoteObject);
+        }
+    }
+
+    private static RemoteObjectInterface getMasterRemoteObject(RemoteObjectRegistryUsecases remoteObjectRegistryUsecases, RemoteObject remoteObject) {
+        var masterRemoteObject = remoteObjectRegistryUsecases.getRemoteObject("master");
+
+        if (masterRemoteObject == null) {
+            HealthCheckUsecases.execute(remoteObjectRegistryUsecases, remoteObject);
+        }
+
+        return masterRemoteObject;
     }
 
     private static void setAllCloneMessages(RemoteObject remoteObject, RemoteObjectInterface masterRemoteObject) throws RemoteException {
@@ -24,16 +41,8 @@ public class CloneUsecases {
 
         remoteObject.setAllMessages(allMessages);
 
-        System.out.println(remoteObject.getAllMessages());
-    }
-
-    private static RemoteObjectInterface getMasterRemoteObject(RemoteObjectRegistryUsecases remoteObjectRegistryUsecases) throws RemoteException {
-        var masterRemoteObject = remoteObjectRegistryUsecases.getMasterRemoteObject();
-
-        if (masterRemoteObject == null) {
-            throw new RemoteException("Não foi possível achar referência remota do servidor mestre!");
-        }
-
-        return masterRemoteObject;
+        System.out.println(
+                "[INFO] As mensagens foram sincronizadas: "
+                        .concat(remoteObject.getAllMessages().toString()));
     }
 }

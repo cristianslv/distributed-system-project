@@ -9,14 +9,11 @@ public class Main {
         try {
             var remoteObject = new RemoteObject();
             var remoteObjectRegistryUsecases = new RemoteObjectRegistryUsecases();
-            var masterRemoteObject = remoteObjectRegistryUsecases.getMasterRemoteObject();
+            var masterRemoteObject = remoteObjectRegistryUsecases.getRemoteObject("master");
 
-            if (masterRemoteObject == null) {
-                remoteObjectRegistryUsecases.createRemoteObjectRegistry();
-
+            if (masterRemoteObject == null && remoteObjectRegistryUsecases.areThereNoClones()) {
                 MasterUsecases.execute(remoteObjectRegistryUsecases, remoteObject);
             } else {
-                remoteObjectRegistryUsecases.setRemoteObjectRegistry();
                 CloneUsecases.execute(remoteObjectRegistryUsecases, remoteObject);
             }
         } catch (RemoteException | AlreadyBoundException | MalformedURLException e) {
