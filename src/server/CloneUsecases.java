@@ -40,9 +40,6 @@ public class CloneUsecases {
         var allMessages = masterRemoteObject.getAllMessages();
 
         remoteObject.syncMessages(allMessages);
-
-        System.out.println(
-                "[INFO] As mensagens foram sincronizadas: "
-                        .concat(remoteObject.getAllMessages().toString()));
+        remoteObject.setMqttSubscriberUsecases();
     }
 }

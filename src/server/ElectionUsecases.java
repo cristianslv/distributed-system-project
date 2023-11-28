@@ -48,10 +48,10 @@ public class ElectionUsecases implements Runnable {
             var masterRemoteObject = remoteObjectRegistryUsecases.getRemoteObject(MASTER);
             var allMessages = masterRemoteObject.getAllMessages();
 
-            remoteObject.syncMessages(allMessages);
-            System.out.println(
-                    "[INFO] As mensagens foram sincronizadas: "
-                            .concat(remoteObject.getAllMessages().toString()));
+            if (remoteObject.getAllMessages().isEmpty()) {
+                remoteObject.syncMessages(allMessages);
+                remoteObject.setMqttSubscriberUsecases();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

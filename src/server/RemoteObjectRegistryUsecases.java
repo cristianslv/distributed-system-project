@@ -12,12 +12,12 @@ import java.util.stream.IntStream;
 
 public class RemoteObjectRegistryUsecases {
 
+    private final Registry remoteObjectRegistry;
+    private static final String MASTER = "master";
+
     public RemoteObjectRegistryUsecases() throws RemoteException {
         remoteObjectRegistry = LocateRegistry.getRegistry(3000);
     }
-
-    private final Registry remoteObjectRegistry;
-    private static final String MASTER = "master";
 
     public void bindRemoteObjectToMaster(RemoteObjectInterface remoteObject) throws AlreadyBoundException,
             RemoteException {

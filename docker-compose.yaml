@@ -14,14 +14,14 @@ services:
       - mqtt-net
   mqtt-pub:
     image: eclipse-mosquitto:latest
-    command: sh -c "mosquitto_pub -h mqtt-broker -t mqtt-topic -m 'Hello World'"
+    command: sh -c "mosquitto_pub -h mqtt-broker -t MASTER-MESSAGE-RECEIVED -m 'Hello World'"
     depends_on:
       - mqtt-broker
     networks:
       - mqtt-net
   mqtt-sub:
     image: eclipse-mosquitto:latest
-    command: sh -c "mosquitto_sub -h mqtt-broker -t mqtt-topic"
+    command: sh -c "mosquitto_sub -h mqtt-broker -t MASTER-MESSAGE-RECEIVED"
     depends_on:
       - mqtt-broker
     networks:
