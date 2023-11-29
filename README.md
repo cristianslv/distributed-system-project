@@ -64,6 +64,10 @@ cd src
 java -cp '../src:../lib/*' server.Main
 ```
 
+Fiz um vídeo e compartilhei no drive para caso surja alguma dúvida:
+[LINK DO DRIVE](https://drive.google.com/file/d/1b5-ZeOl-GcrPk-_IK8-dz8L0gTH-JXc8/view?usp=sharing)
+Aqui faço o passo a passo do README.
+
 ## Referências
 
 - [MQTT Broker with Docker](https://dev.to/abbazs/a-step-by-step-guide-for-starting-a-mosquitto-broker-service-in-a-containers-with-docker-compose-1j8i)
